@@ -1,0 +1,17 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel UpdatePointCloud
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+
+RWStructuredBuffer<float3> PointPos;
+RWStructuredBuffer<float4> PointCol;
+float Time;
+ 
+[numthreads(8,8,1)]
+void UpdatePointCloud (uint3 gid : SV_GroupID, uint index : SV_GroupIndex)
+{
+     int pindex = gid.x *8*8*1 + index;
+     PointPos[pindex]=float3(pindex/1000.0-50+ sin(Time) , 20 * cos(pindex)+10*sin(Time), 20 * sin(pindex)+10*sin(Time));
+     PointCol[pindex]=float4((sin(Time) + 1)*0.5, (cos(Time) + 1)*0.5, abs(cos(Time) + sin(Time)), 1);
+}
