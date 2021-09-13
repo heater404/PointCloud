@@ -31,6 +31,7 @@ public class PointCloud : MonoBehaviour, IDragHandler
         mesh.vertices = positions;
         mesh.colors = colors;
         mesh.SetIndices(indices, MeshTopology.Points, 0);
+        mesh.MarkDynamic();
     }
 
     public void OnDrag(PointerEventData eventData)
